@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validation Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      width: 350px;
+    }
+    .form-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 10px 0 5px;
+      color: #111827;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+    input:focus {
+      border-color: #4f46e5;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      background: #22c55e;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #16a34a;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registration Form</h2>
+    <form>
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required pattern="^[A-Za-z ]{3,50}$" title="Enter a valid full name (letters and spaces only)">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" title="Password must be at least 8 characters long and contain letters and numbers">
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required pattern="^[0-9]{10,15}$" title="Enter a valid phone number (10-15 digits)">
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>

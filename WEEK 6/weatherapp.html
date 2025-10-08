@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      margin: 0;
+      padding: 40px;
+    }
+    #app {
+      max-width: 420px;
+      margin: auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      padding: 10px;
+      width: 65%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    input:focus {
+      border-color: #007BFF;
+    }
+    button {
+      padding: 10px 14px;
+      margin-left: 6px;
+      border: none;
+      border-radius: 8px;
+      background: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+    button:hover {
+      background: #0056b3;
+      transform: scale(1.05);
+    }
+    .weather {
+      margin-top: 20px;
+      font-size: 17px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .weather img {
+      margin-top: 10px;
+      width: 80px;
+    }
+    .error {
+      color: #d9534f;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>🌦 Weather App</h2>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button id="searchBtn">Get Weather</button>
+    <div class="weather" id="weather"></div>
+    <div class="error" id="error"></div>
+  </div>
+
+  <script>
+    const apiKey = "0e55753b3b447e61cf143cbac0bb76d2"; // 🔑 Replace with your OpenWeatherMap API key
+    const searchBtn = document.getElementById("searchBtn");
+    const cityInput = document.getElementById("cityInput");
+    const weatherDiv = document.getElementById("weather");
+    const errorDiv = document.getElementById("error");
+
+  
+    async function getWeather(city) {
+      try {
+        errorDiv.textContent = "";
+        weatherDiv.innerHTML = "<p>Loading...</p>";
+
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+
+        if (!res.ok) throw new Error("City not found!");
+
+        const data = await res.json();
+
+        localStorage.setItem("lastCity", city);
+
+      
+        const icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+       
+        weatherDiv.innerHTML = `
+          <h3>${data.name}, ${data.sys.country}</h3>
+          <p>🌡 <strong>Temp:</strong> ${data.main.temp} °C</p>
+          <p>☁ <strong>Weather:</strong> ${data.weather[0].description}</p>
+          <p>💧 <strong>Humidity:</strong> ${data.main.humidity}%</p>
+          <img src="${icon}" alt="Weather icon">
+        `;
+      } catch (err) {
+        weatherDiv.innerHTML = "";
+        errorDiv.textContent = "❌ " + err.message;
+      }
+    }
+
+    searchBtn.addEventListener("click", () => {
+      const city = cityInput.value.trim();
+      if (city) {
+        getWeather(city);
+      } else {
+        errorDiv.textContent = "Please enter a city name!";
+      }
+    });
+
+
+    window.addEventListener("load", () => {
+      const lastCity = localStorage.getItem("lastCity");
+      if (lastCity) {
+        cityInput.value = lastCity;
+        getWeather(lastCity);
+      }
+    });
+  </script>
+</body>
+</html>

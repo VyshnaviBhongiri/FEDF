@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .form-control {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+    .success {
+      color: green;
+      font-size: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form id="registrationForm">
+    <h2>Register</h2>
+    <div class="form-control">
+      <input type="text" id="fullName" placeholder="Full Name" required>
+      <span class="error" id="nameError"></span>
+    </div>
+    <div class="form-control">
+      <input type="email" id="email" placeholder="Email" required>
+      <span class="error" id="emailError"></span>
+    </div>
+    <div class="form-control">
+      <input type="password" id="password" placeholder="Password" required>
+      <span class="error" id="passwordError"></span>
+    </div>
+    <div class="form-control">
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <span class="error" id="phoneError"></span>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const fullName = document.getElementById('fullName');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const phone = document.getElementById('phone');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const phoneError = document.getElementById('phoneError');
+
+    // Name Validation
+    fullName.addEventListener('input', () => {
+      if (fullName.value.trim() === '') {
+        nameError.textContent = "Full Name is required";
+      } else {
+        nameError.textContent = "";
+      }
+    });
+
+    // Email Validation
+    email.addEventListener('input', () => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email.value.trim() === '') {
+        emailError.textContent = "Email is required";
+      } else if (!emailRegex.test(email.value)) {
+        emailError.textContent = "Enter a valid email address";
+      } else {
+        emailError.textContent = "";
+      }
+    });
+
+    // Password Validation
+    password.addEventListener('input', () => {
+      const minLength = 8;
+      const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+      const numberRegex = /\d/;
+      const uppercaseRegex = /[A-Z]/;
+
+      if (password.value.trim() === '') {
+        passwordError.textContent = "Password is required";
+      } else if (password.value.length < minLength) {
+        passwordError.textContent = "Password must be at least 8 characters";
+      } else if (!specialCharRegex.test(password.value)) {
+        passwordError.textContent = "Password must contain a special character";
+      } else if (!numberRegex.test(password.value)) {
+        passwordError.textContent = "Password must contain a number";
+      } else if (!uppercaseRegex.test(password.value)) {
+        passwordError.textContent = "Password must contain an uppercase letter";
+      } else {
+        passwordError.textContent = "";
+      }
+    });
+
+    // Phone Number Validation
+    phone.addEventListener('input', () => {
+      const phoneRegex = /^[0-9]{10}$/; // 10 digit phone number
+      if (phone.value.trim() === '') {
+        phoneError.textContent = "Phone number is required";
+      } else if (!phoneRegex.test(phone.value)) {
+        phoneError.textContent = "Enter a valid 10-digit phone number";
+      } else {
+        phoneError.textContent = "";
+      }
+    });
+
+    // Form Submission
+    document.getElementById('registrationForm').addEventListener('submit', (e) => {
+      if (nameError.textContent || emailError.textContent || passwordError.textContent || phoneError.textContent) {
+        e.preventDefault(); // Prevent submission if errors exist
+        alert("Please fix the errors before submitting.");
+      }
+    });
+  </script>
+</body>
+</html>
