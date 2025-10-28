@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KL University Bookstore</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: white;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #c00;
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .search-bar {
+      display: inline-flex;
+      background: white;
+      border-radius: 30px;
+      padding: 8px 15px;
+      width: 60%;
+      max-width: 500px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    .book-list, .cart {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .book {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .book:last-child {
+      border-bottom: none;
+    }
+
+    button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="kluh.png" alt="KL University Logo">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Categories</a>
+      <a href="#">Best Sellers</a>
+      <a href="#">Cart</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Welcome to KL University Bookstore</h1>
+    <p>Your one-stop shop for textbooks, novels, and study guides</p>
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Search for books...">
+    </div>
+  </div>
+
+  <h1 style="text-align:center;">📚 Online Bookstore</h1>
+  <div class="book-list" id="bookList"></div>
+
+  <div class="cart">
+    <h2>🛒 Shopping Cart</h2>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: ₹0</div>
+  </div>
+
+  <script type="module">
+    import { displayBooks } from './books.js';
+    import { updateCartUI } from './ui.js';
+    import { cart } from './cart.js';
+
+    displayBooks();
+    updateCartUI(cart);
+  </script>
+
+</body>
+</html>
